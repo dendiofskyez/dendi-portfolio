@@ -131,7 +131,7 @@ export default function Portfolio() {
       </section>
 
       <section id="work" className="min-h-screen border-b border-white/10 px-4 py-16 md:px-10">
-        <h3 className="mb-10 text-3xl font-bold text-[#f3efe6]">ODDINARY HIGHLIGHTS ✦ ROCKSTAR ERA</h3>
+        <h3 className="mb-10 text-3xl font-bold text-[#f3efe6]">✦ODDINARY HIGHLIGHTS✦</h3>
         <div className="grid gap-6 md:grid-cols-3">
           {cards.map((card) => (
             <motion.div
