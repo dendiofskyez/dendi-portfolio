@@ -331,17 +331,70 @@ export default function Portfolio() {
         </section>
 
         {/* CONTACT */}
-        <footer id="contact" className="px-4 py-16 text-center sm:px-6 md:px-10">
-          <div className="text-2xl font-bold text-[#f3efe6]">
-            STAY CONNECTED
-          </div>
+       <footer
+  id="contact"
+  className="px-4 py-16 text-center sm:px-6 md:px-10"
+>
+  {/* FORM EMAIL */}
+  <div className="mx-auto mb-12 max-w-2xl rounded-[1.8rem] border border-white/15 bg-white/5 p-6 backdrop-blur-xl shadow-[0_20px_60px_rgba(111,143,184,0.12)] sm:p-8">
+    <div className="mb-5 text-xl font-bold text-[#f3efe6]">
+      SEND MESSAGE
+    </div>
 
-          <div className="mt-5 space-y-2 text-sm sm:text-base">
-            <div>Instagram @dendiii_skyz</div>
-            <div>WhatsApp 085640854493</div>
-            <div>Email dendipermana1107@gmail.com</div>
-          </div>
-        </footer>
+    <form
+      action="https://formsubmit.co/dendipermana1107@gmail.com"
+      method="POST"
+      className="grid gap-4 text-left"
+    >
+      {/* setting */}
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_subject" value="Pesan Baru Portfolio Dendi" />
+      <input type="hidden" name="_template" value="table" />
+
+      <input
+        type="text"
+        name="name"
+        required
+        placeholder="Nama"
+        className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+      />
+
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="Email"
+        className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+      />
+
+      <textarea
+        name="message"
+        rows={5}
+        required
+        placeholder="Pesan..."
+        className="resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+      />
+
+      <button
+        type="submit"
+        className="rounded-xl bg-[#6f8fb8] px-5 py-3 text-sm font-bold text-black transition hover:scale-[1.02]"
+      >
+        KIRIM EMAIL
+      </button>
+    </form>
+  </div>
+
+  {/* CONTACT INFO */}
+  <div className="text-2xl font-bold text-[#f3efe6]">
+    STAY CONNECTED
+  </div>
+
+  <div className="mt-5 space-y-2 text-sm sm:text-base">
+    <div>Instagram @dendiii_skyz</div>
+    <div>WhatsApp 085640854493</div>
+    <div>Email dendipermana1107@gmail.com</div>
+  </div>
+</footer>
       </div>
     </>
   );
