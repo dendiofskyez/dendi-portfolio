@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import "./index.css";
+
+const menu = ["home", "about", "work", "contact"];
 
 export default function App() {
   const [active, setActive] = useState("home");
 
-  const menu = ["home", "about", "work", "contact"];
+  const menuItems = useMemo(() => menu, []);
 
   const go = (id: string) => {
     setActive(id);
@@ -17,7 +19,7 @@ export default function App() {
 
   useEffect(() => {
     const onScroll = () => {
-      for (const id of menu) {
+      for (const id of menuItems) {
         const el = document.getElementById(id);
         if (!el) continue;
 
@@ -29,7 +31,7 @@ export default function App() {
 
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [menuItems]);
 
   const cards = [
     {
