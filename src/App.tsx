@@ -114,33 +114,39 @@ export default function Portfolio() {
       </section>
 <section
   id="about"
-  className="grid min-h-screen items-center gap-10 border-b border-white/10 px-4 py-16 md:grid-cols-2 md:px-10"
+  className="mx-auto grid min-h-screen max-w-7xl items-center gap-10 border-b border-white/10 px-5 py-16 sm:px-8 md:grid-cols-2 md:gap-14 md:px-10 md:py-24"
 >
   {/* TEXT */}
-  <div className="flex h-full flex-col justify-center">
-    <h2 className="text-2xl font-bold leading-tight text-[#f3efe6] md:text-5xl">
-      HELLO, I'M SATRIA DENDI PERMANA,
+  <div className="order-2 flex flex-col justify-center md:order-1">
+    <h2 className="text-3xl font-bold leading-tight text-[#f3efe6] sm:text-4xl md:text-5xl lg:text-6xl">
+      HELLO, I'M SATRIA
       <br />
-      A DESIGNER WHO BREAKS LIMITS.
+      DENDI PERMANA,
+      <br />
+      A DESIGNER WHO
+      <br />
+      BREAKS LIMITS.
     </h2>
 
-    <p className="mt-6 max-w-xl text-sm leading-8 md:text-lg">
+    <p className="mt-6 max-w-xl text-sm leading-8 text-[#6f8fb8] sm:text-base md:text-lg md:leading-9">
       Lahir pada tahun 2003 dan besar di Brebes, Jawa Tengah, Indonesia.
       Saya terus melangkah maju sebagai Graphic Designer yang berani
       mendobrak batas, menciptakan visual yang berani, mengeksplorasi
-      UI/UX, dan mengubah ide menjadi karya penuh energi tanpa batas—
+      UI/UX, dan mengubah ide menjadi karya penuh energi tanpa batas —
       STEP OUT dan ciptakan jalan saya sendiri.
     </p>
   </div>
 
-  {/* FOTO PROFIL */}
-  <div className="flex h-full items-center justify-center md:justify-end">
-    <div className="aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-      <img
-        src={profile}
-        alt="Profile"
-        className="h-full w-full object-cover"
-      />
+  {/* FOTO */}
+  <div className="order-1 flex justify-center md:order-2 md:justify-end">
+    <div className="w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg">
+      <div className="aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+        <img
+          src={profile}
+          alt="Profile"
+          className="h-full w-full object-cover"
+        />
+      </div>
     </div>
   </div>
 </section>
