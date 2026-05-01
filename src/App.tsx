@@ -82,7 +82,7 @@ export default function Portfolio() {
 
       await emailjs.sendForm(
         "service_0mmdaza",
-        "template_gmqna1s",
+        "template_ff9rdji",
         formRef.current,
         "lAIgDTsQWEly8v2u9"
       );
