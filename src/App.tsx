@@ -1,11 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 export default function Portfolio() {
   const [active, setActive] = useState("home");
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
+
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const profile = "/profile.jpg";
   const sections = ["home", "about", "work", "contact"];
@@ -66,6 +72,32 @@ export default function Portfolio() {
     });
   };
 
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formRef.current) return;
+
+    try {
+      setSending(true);
+
+      await emailjs.sendForm(
+        "service_xxxxx",
+        "template_xxxxx",
+        formRef.current,
+        "PUBLIC_KEY"
+      );
+
+      setSent(true);
+      formRef.current.reset();
+
+      setTimeout(() => setSent(false), 4000);
+    } catch {
+      alert("Gagal mengirim email");
+    } finally {
+      setSending(false);
+    }
+  };
+
   const cards = [
     {
       title: "Experience",
@@ -111,8 +143,11 @@ export default function Portfolio() {
           >
             <motion.div
               className="absolute h-72 w-72 rounded-full bg-[#6f8fb8]/20 blur-3xl"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              animate={{
+                opacity: [0, 1, 1, 0],
+                scale: [0.8, 1, 1.1, 1],
+              }}
+              transition={{ duration: 2.4 }}
             />
 
             <div className="relative text-center">
@@ -136,7 +171,7 @@ export default function Portfolio() {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
-                transition={{ delay: 0.5, duration: 1.2 }}
+                transition={{ delay: 0.4, duration: 1.2 }}
                 className="mx-auto mt-5 h-[2px] max-w-[220px] bg-[#6f8fb8]"
               />
 
@@ -148,7 +183,20 @@ export default function Portfolio() {
         )}
       </AnimatePresence>
 
-      {/* MAIN */}
+      {/* popup success */}
+      <AnimatePresence>
+        {sent && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            className="fixed bottom-6 right-6 z-[999] rounded-2xl bg-[#6f8fb8] px-5 py-3 font-bold text-black shadow-2xl"
+          >
+            EMAIL SENT 🔥
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <main className="min-h-screen overflow-x-hidden bg-[#05070b] bg-[radial-gradient(circle_at_top,#13295a_0%,#05070b_45%,#030408_100%)] font-mono text-[#6f8fb8]">
         {/* progress */}
         <div
@@ -156,7 +204,7 @@ export default function Portfolio() {
           style={{ width: `${progress}%` }}
         />
 
-        {/* cursor desktop */}
+        {/* cursor */}
         <motion.div
           className="pointer-events-none fixed left-0 top-0 z-50 hidden h-32 w-32 rounded-full bg-[#6f8fb8]/20 blur-2xl lg:block"
           animate={{
@@ -240,7 +288,12 @@ export default function Portfolio() {
           id="about"
           className="mx-auto grid max-w-7xl items-center gap-10 border-b border-white/10 px-5 py-16 sm:px-8 md:grid-cols-2 md:gap-14 md:px-10 md:py-24"
         >
-          <div className="order-2 md:order-1">
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="order-2 md:order-1"
+          >
             <h2 className="text-3xl font-bold leading-tight text-[#f3efe6] sm:text-4xl md:text-5xl">
               HELLO, I'M SATRIA
               <br />
@@ -254,12 +307,16 @@ export default function Portfolio() {
             <p className="mt-6 max-w-xl text-sm leading-8 sm:text-base md:text-lg">
               Lahir pada tahun 2003 dan besar di Brebes, Jawa Tengah,
               Indonesia. Saya terus berkembang sebagai Graphic Designer yang
-              berani mendobrak batas, menciptakan visual modern, mengeksplorasi
-              UI/UX, dan mengubah ide menjadi karya penuh energi.
+              berani mendobrak batas dan menciptakan visual modern penuh energi.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="order-1 flex justify-center md:order-2 md:justify-end">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="order-1 flex justify-center md:order-2 md:justify-end"
+          >
             <div className="w-full max-w-[300px] sm:max-w-sm md:max-w-md">
               <div className="aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
                 <img
@@ -269,7 +326,7 @@ export default function Portfolio() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* WORK */}
@@ -285,7 +342,14 @@ export default function Portfolio() {
             {cards.map((card) => (
               <motion.div
                 key={card.title}
-                whileHover={{ y: -8, scale: 1.02 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{
+                  y: -10,
+                  scale: 1.03,
+                  boxShadow: "0 0 35px rgba(111,143,184,0.25)",
+                }}
                 className="rounded-[1.8rem] border border-white/15 bg-white/5 p-6 backdrop-blur-xl"
               >
                 <div className="mb-5 flex items-center gap-3 text-lg font-bold text-[#f3efe6]">
@@ -314,32 +378,24 @@ export default function Portfolio() {
             </div>
 
             <form
-              action="https://formsubmit.co/dendipermana1107@gmail.com"
-              method="POST"
+              ref={formRef}
+              onSubmit={sendEmail}
               className="grid gap-4 text-left"
             >
-              <input type="hidden" name="_captcha" value="false" />
-              <input
-                type="hidden"
-                name="_subject"
-                value="Pesan Baru Portfolio Dendi"
-              />
-              <input type="hidden" name="_template" value="table" />
-
               <input
                 type="text"
-                name="name"
+                name="from_name"
                 required
                 placeholder="Nama"
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none"
               />
 
               <input
                 type="email"
-                name="email"
+                name="from_email"
                 required
                 placeholder="Email"
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none"
               />
 
               <textarea
@@ -347,14 +403,15 @@ export default function Portfolio() {
                 rows={5}
                 required
                 placeholder="Pesan..."
-                className="resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40"
+                className="resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none"
               />
 
               <button
                 type="submit"
+                disabled={sending}
                 className="rounded-xl bg-[#6f8fb8] px-5 py-3 text-sm font-bold text-black transition hover:scale-[1.02]"
               >
-                KIRIM EMAIL
+                {sending ? "SENDING..." : "KIRIM EMAIL"}
               </button>
             </form>
           </div>
