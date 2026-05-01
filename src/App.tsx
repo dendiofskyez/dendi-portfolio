@@ -81,10 +81,10 @@ export default function Portfolio() {
       setSending(true);
 
       await emailjs.sendForm(
-        "service_xxxxx",
-        "template_xxxxx",
+        "service_0mmdaza",
+        "template_gmqna1s",
         formRef.current,
-        "PUBLIC_KEY"
+        "lAIgDTsQWEly8v2u9"
       );
 
       setSent(true);
